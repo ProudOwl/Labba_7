@@ -13,6 +13,11 @@ string decodeString(const string& s) {
                 k = k * 10 + (s[i] - '0');
                 i++;
             }
+
+            if (k < 1 || k > 300) {
+                cerr << "Ошибка: число повторений должно быть от 1 до 300.\n";
+                return "";
+            }
             
             i++;
             
@@ -47,7 +52,21 @@ int main() {
     string input;
     cout << "Введите закодированную строку: ";
     cin >> input;
-    
+
+    // проверка длины строки
+    if (input.length() < 1 || input.length() > 30) {
+        cerr << "Ошибка: длина строки должна быть от 1 до 30 символов.\n";
+        return 1;
+    }
+
+    // проверка символов
+    for (char c : input) {
+        if (!(islower(c) || isdigit(c) || c == '[' || c == ']')) {
+            cerr << "Ошибка: строка содержит недопустимые символы.\n";
+            return 1;
+        }
+    }
+
     string decoded = decodeString(input);
     cout << "Декодированная строка: " << decoded << endl;
     return 0;
